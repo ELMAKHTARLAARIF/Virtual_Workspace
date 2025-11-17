@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoekSpace</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <section class="section-hero">
+        <div class="hero-content">
+            <div class="personnel-info ">
+                <h2>Staff Members</h2>
+                <div id="cards"></div>
+                <!-- <div class="profil-personnel">
+                     <img src="photo/486044370_18070192438860811_988495541882200225_n.jpg" alt="photo profile">
+                    <h4>El Makhtar Laarif</h4>
+                    <p>Edit</p>
+                </div>-->
+                <button id="addWorker">Add New worker</button>
+            </div>
+            <div class="work-space">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+        </div>
+
+    </section>
+    <div class="add-worker-modal is_hidden" id="modal-content">
+        <div class="close-modal-content">
+            <p>Add Worker</p>
+            <button class="modal__close" data-action="close-modal" id="close-modal">&times;</button>
+        </div>
+        <div class="forms">
+            <form class="add-worker-inputs" id="workerInputs">
+
+                <label>Name:</label>
+                <input type="text" class="input input-name" placeholder="name">
+
+                <label>role:</label>
+                <select name="options" id="option">
+                    <option value="It Guy">It Guy</option>
+                    <option value="It Guy">It Guy</option>
+                    <option value="It Guy">It Guy</option>
+                    <option value="It Guy">It Guy</option>
+                </select>
+                <label>Image(URL):</label>
+                <input type="text" class="input input-name" placeholder="url">
+
+                <div class="generate-image ">
+                    <img src="photo/486587068_18070192528860811_6917916294069298947_n.jpg" alt="">
+
+                </div>
+            </form>
+
+            <form action="" class="experience-form is_hidden">
+                <h4>Experience :</h4>
+                <div action="" class="experience-form-Content ">
+                    <label>Company:</label>
+                    <input type="text">
+                    <label>role:</label>
+                    <input type="text">
+                    <label>From:</label>
+                    <input type="date">
+                    <label>To:</label>
+                    <input type="date">
+
+                </div>
+            </form>
+            <div class="add-exp">
+                <button>Add Experience (optional)</button>
+            </div>
+            <div class="email-phone-information">
+                <label>Email</label>
+                <input type="email">
+                <label>Phone</label>
+                <input type="phone">
+            </div>
+            <div class="btnSubmit">
+                <input type="submit" id="submit">
+                <input type="submit" id="submit">
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
