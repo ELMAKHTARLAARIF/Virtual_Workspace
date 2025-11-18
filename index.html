@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WoekSpace</title>
     <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
                     <h4>El Makhtar Laarif</h4>
                     <p>Edit</p>
                 </div>-->
-                <button id="addWorker">Add New worker</button>
+                <button class="btn" id="addWorkerBtn" data-action="addworker">Add New worker</button>
             </div>
             <div class="work-space">
                 <div></div>
@@ -36,7 +37,7 @@
     <div class="add-worker-modal is_hidden" id="modal-content">
         <div class="close-modal-content">
             <p>Add Worker</p>
-            <button class="modal__close" data-action="close-modal" id="close-modal">&times;</button>
+            <button class="modal__close btn" data-action="close-modal" id="close-modal">&times;</button>
         </div>
         <div class="forms">
             <form class="add-worker-inputs" id="workerInputs">
@@ -60,7 +61,7 @@
                 </div>
             </form>
 
-            <form action="" class="experience-form is_hidden">
+            <form action="" class="experience-form is_hidden" id="exp_form">
                 <h4>Experience :</h4>
                 <div action="" class="experience-form-Content ">
                     <label>Company:</label>
@@ -75,7 +76,7 @@
                 </div>
             </form>
             <div class="add-exp">
-                <button>Add Experience (optional)</button>
+                <button class="btn" data-action="addexperience">Add Experience (optional)</button>
             </div>
             <div class="email-phone-information">
                 <label>Email</label>
