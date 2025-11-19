@@ -12,11 +12,12 @@
 .section-hero {
     width: 100%;
     height: 100vh;
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
     background-color: var(--main);
 }
 
 .hero-content {
+
     width: 100%;
     height: 100%;
     display: flex;
@@ -34,32 +35,50 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    gap: 30px;
+    gap: 5px;
 }
 
 .personnel-info h2 {
     margin-top: 10px;
     color: rgb(14, 115, 209);
+
 }
 
 #cards {
     width: 100%;
-    height: 60px;
+    height: 80%;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    overflow-y: auto;
 
+}
+#cards::-webkit-scrollbar {
+  width: 5px; 
+}
+
+#cards::-webkit-scrollbar-track {
+  background: #fffcfc;
+}
+
+#cards::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 4px;
+}
+
+#cards::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
 .personnel-info .profil-personnel {
     width: 80%;
     height: 60px;
+    margin: 10px 0 10px ;
     background-color: rgb(245, 245, 245);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 50px;
     border-radius: 10px;
     box-shadow: 0px 0px 6px black;
 }
@@ -73,6 +92,7 @@
 
 .personnel-info .profil-personnel h4 {
     margin-top: -30px;
+    width: fit-content;
 }
 
 .profil-personnel p {
@@ -96,8 +116,27 @@
     color: white;
 }
 
+/* .canvas{
+    display: grid;
+}
+
+.canvas img {
+    grid-row: 1/2;
+    grid-column: 1/2;
+}
+
+.canvas svg {
+    grid-row: 1/2;
+    grid-column: 1/2;
+}
+
+svg polygon {
+    background-color: rgba(255, 255, 255, 0.397);
+} */
+
+
 .work-space {
-    background-image: var(--bac-image);
+    background-image:  url(./photo/kitchen.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -105,18 +144,17 @@
     width: 90%;
     height: 650px;
     margin-right: 10px;
-    display: grid;
-    grid-template-columns: 2fr 1fr 2fr 2fr;
-    gap: 25px
+
+
 }
-
-/* .work-space div{
-     margin: 10px 0;
-    width: 380px;
-    height: 224px; 
-    background-color: blue;
-
-} */
+.container{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr;
+    grid-template-rows: 2fr 3fr 2fr;
+    gap: 40px;
+}
 
 .add-worker-modal {
     position: absolute;
@@ -128,12 +166,27 @@
     align-items: center;
     border-radius: 10px;
     padding-top: 15px;
-    z-index: 1;
+    z-index: 1000;
     box-shadow: 0px 0px 5px black;
     height: 90vh;
     overflow-y: auto;
 }
+.add-worker-modal::-webkit-scrollbar {
+  width: 7px; 
+}
 
+.add-worker-modal::-webkit-scrollbar-track {
+  background: #fffcfc;
+}
+
+.add-worker-modal::-webkit-scrollbar-thumb {
+  background-color: #b9b8b8; 
+  border-radius: 10px;
+}
+
+.add-worker-modal::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
 .close-modal-content {
     display: flex;
     justify-content: space-around;
@@ -146,22 +199,18 @@
     font-weight: 700;
 }
 
-.close-modal-content button {
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    border: none;
-    background-color: rgb(21, 116, 204);
-}
 
-.add-worker-inputs label,.email-phone-information label {
+
+.add-worker-inputs label,
+.email-phone-information label {
     display: block;
     margin: 15px 0 0 25px;
     font-weight: 900;
     color: rgb(46, 46, 46);
 }
 
-.add-worker-inputs,.email-phone-information  {
+.add-worker-inputs,
+.email-phone-information {
     padding-top: 60px;
     height: 100%;
     display: flex;
@@ -169,7 +218,8 @@
 
 }
 
-.add-worker-inputs input,.email-phone-information input,
+.add-worker-inputs input,
+.email-phone-information input,
 .add-worker-inputs select {
     height: 40px;
     width: 90%;
@@ -184,7 +234,7 @@
     width: 150px;
     height: 150px;
     margin: 0 auto;
-    padding-top:20px ;
+    padding-top: 20px;
 
 }
 
@@ -193,7 +243,9 @@
     height: 80%;
     border-radius: 50%;
     border: 2px dotted blue;
-}.experience-form h4{
+}
+
+.experience-form h4 {
     margin: 10px;
 }
 
@@ -201,7 +253,7 @@
     width: 90%;
     height: 80%;
     margin: 0 auto;
-    background-color: rgb(246, 246, 248);
+    background-color: rgb(245, 249, 255);
     display: flex;
     box-shadow: 0 0 4px rgb(97, 97, 97);
     flex-direction: column;
@@ -210,8 +262,7 @@
     border-radius: 10px;
 }
 
-.experience-form-Content input
- {
+.experience-form-Content input {
 
     height: 45px;
     width: 90%;
@@ -227,35 +278,58 @@
     font-weight: 900;
     color: rgb(71, 69, 69);
 }
-.add-exp{
+
+.add-exp {
     margin-top: 30px;
     width: 100%;
     height: 40px;
     text-align: center;
     align-items: center;
 }
-.add-exp button{
+
+.add-exp button {
     width: 120px;
     height: 40px;
     border-radius: 5px;
     background-color: rgb(250, 172, 28);
     border: none;
 }
-.btnSubmit{
-    padding:15px 0px 15px;
+
+.btnSubmit {
+    padding: 15px 0px 15px;
     display: flex;
     justify-content: space-around;
     text-align: center;
 }
-.btnSubmit input{
+
+.btnSubmit .btnSubmitCancel {
     border-radius: 5px;
     border: none;
     color: white;
     font-weight: 900;
-    background-color: rgb(21, 116, 204);
+    background-color: rgb(52, 52, 53);
     width: 140px;
     height: 45px;
 }
+
+.btnSubmit .btn-submit {
+    background-color: rgb(21, 116, 204);
+}
+
+.error-Name {
+    width: 50%;
+    height: 30px;
+    color: rgb(214, 0, 0);
+    text-align: center;
+    font-weight: 700;
+    background-color: rgb(219, 138, 138);
+    padding-top: 20px;
+    border-left: 14px solid rgb(241, 6, 6);
+    border-bottom: 4px solid rgb(241, 6, 6);
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
 .is_hidden {
     display: none;
 }
