@@ -15,11 +15,11 @@
             <div class="personnel-info ">
                 <h2>Staff Members</h2>
                 <div id="cards">
-                    <div class="profil-personnel">
+                    <!-- <div class="profil-personnel">
                         <img src="photo/486044370_18070192438860811_988495541882200225_n.jpg" alt="photo profile">
                         <h4>El Makhtar Laarif</h4>
                         <p>Edit</p>
-                    </div>
+                    </div> -->
                 </div>
                 <button class="btn" id="addWorkerBtn" data-action="addworker">Add New worker</button>
             </div>
@@ -28,9 +28,11 @@
                     <div class="div1"></div>
                     <div class="div2"></div>
                     <div class="div3"></div>
-                    <div class="div"></div>
+                    <div class="div4"></div>
                     <div class="div5"></div>
                     <div class="div6"></div>
+                    <div class="div7"></div>
+                    <div class="div8"></div>
                 </div>
             </div>
             <!-- <div class="canvas">
@@ -42,6 +44,11 @@
                     <polygon id="zone-security" class="zone" data-room="security" data-capacity="3"
                         points="620,0 915,0 915,155 620,155"></polygon>
 
+    console.log(workers)
+    workers.forEach((worker, index) => {
+        cards.insertAdjacentHTML("beforeend", `
+                     <div class="profil-personnel">
+                     <img src="${worker.url}" alt="photo profile" onclick="ShowDetails(${worker.id})">
                     <polygon id="zone-server" class="zone" data-room="server" data-capacity="3"
                         points="440,0 615,0 615,155 440,155"></polygon>
 
@@ -59,42 +66,44 @@
 
 
     </section>
-    <div class="add-worker-modal is_hidden" id="modal-content">
+    <section>
+        <div class="add-worker-modal is_hidden" id="modal-content">
 
-        <div class="close-modal-content">
-            <p>Add Worker</p>
-        </div>
+            <div class="close-modal-content">
+                <p>Add Worker</p>
+            </div>
 
-        <div class="forms">
+            <div class="forms">
 
-            <form class="add-worker-inputs" id="workerInputs">
-                <div class="error-Name is_hidden">
+                <form class="add-worker-inputs" id="workerInputs">
+                    <div class="error-Name is_hidden">
 
-                </div>
-                <label>Name:</label>
-                <input type="text" class="input input-name" placeholdeManagerrbtn="name">
+                    </div>
+                    <label>Name:</label>
+                    <input type="text" class="input input-name" placeholdeManagerrbtn="name">
 
-                <label>role:</label>
-                <select name="options" id="option" class="input input-role">
-                    <option> Réceptionnistes</option>
-                    <option>Techniciens IT</option>
-                    <option>sécurité</option>
-                    <option>Manager</option>
-                    <option>Nettoyage</option>
-                    <option>Autres rôles</option>
-                </select>
-                <label>Image(URL):</label>
-                <input type="url" class="input input-url" placeholder="url">
+                    <label>role:</label>
+                    <select name="options" id="option" class="input input-role">
+                        <option> Réceptionnistes</option>
+                        <option>Techniciens IT</option>
+                        <option>sécurité</option>
+                        <option>Manager</option>
+                        <option>Nettoyage</option>
+                        <option>Autres rôles</option>
+                    </select>
+                    <label>Image(URL):</label>
+                    <input type="url" class="input input-url" placeholder="url">
 
-                <div class="generate-image ">
-                    <img src="photo/486587068_18070192528860811_6917916294069298947_n.jpg" alt="">
+                    <div class="generate-image ">
+                        <img src="photo/486587068_18070192528860811_6917916294069298947_n.jpg" alt="">
 
-                </div>
-            </form>
+                    </div>
+                </form>
 
-            <form action="" class="experience-form is_hidden" id="exp_form">
-                <h4>Experience :</h4>
+                <form action="" class="experience-form is_hidden" id="exp_form">
+                    <!-- <h4>Experience :</h4>
                 <div action="" class="experience-form-Content">
+                    <div class="errorexp is_hidden">1</div>
                     <label>Company:</label>
                     <input type="text" name="Companyinput">
                     <label>role:</label>
@@ -104,27 +113,55 @@
                     <label>To:</label>
                     <input type="date" name="ToInput">
 
+                </div> -->
+                </form>
+                <div class="add-exp">
+                    <button data-action="addexperience" id="addExpBtn">Add Experience (optional)</button>
                 </div>
-            </form>
-            <div class="add-exp">
-                <button data-action="addexperience" onclick="AddExperience()">Add Experience (optional)</button>
+                <form id="email-phone-form">
+                    <div class="email-phone-information">
+                        <label>Email</label>
+                        <input class="input input-email" type="email">
+                        <label>Phone</label>
+                        <input class="input input-phone" type="number" placeholder="+112 670983477">
+                    </div>
+                    <div class="btnSubmit">
+                        <input class="btnSubmitCancel btn-submit" type="submit" id="submit">
+                        <button class="btn btnSubmitCancel">Cancel</button>
+                    </div>
+                </form>
+
             </div>
-            <form id="email-phone-form">
-            <div class="email-phone-information">
-                <label>Email</label>
-                <input class="input input-email" type="email">
-                <label>Phone</label>
-                <input class="input input-phone" type="phone" placeholder="+112 670983477">
-            </div>
-            <div class="btnSubmit">
-                <input class="btnSubmitCancel btn-submit" type="submit" id="submit">
-                <button class="btn btnSubmitCancel">Cancel</button>
-            </div>
-            </form>
 
         </div>
 
-    </div>
+        <div class="Details-modal is_hidden" id="DetailsModal">
+            <div class="close-details-modal">
+                <span>Worker Details</span>
+                <button class="btn" data-action="closeDetailsModal">X</button>
+            </div>
+            <div class="details-content">
+                <div class="worker-info-detail">
+                    <!-- <h3 id="workerNameDetail">Name:</h3>
+                    <p id="workerRoleDetail">Role:</p>
+                    <p id="workerEmailDetail">Email:</p>
+                    <p id="workerPhoneDetail">Phone:</p> -->
+                </div>
+
+                <div class="worker-image-detail">
+                    <!-- <img src="photo/486587068_18070192528860811_6917916294069298947_n.jpg" alt="worker image"
+                        id="workerImageDetail"> -->
+                </div>
+            </div>
+            <div class="worker-experience-detail" id="workerExperienceDetail">
+                <h4>Experience:</h4>
+
+            </div>
+
+
+
+        </div>
+    </section>
 </body>
 
 </html>
