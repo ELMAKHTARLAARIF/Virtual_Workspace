@@ -157,3 +157,25 @@ function addexperience(id) {
 
 }
 
+//show employee Profil
+const cards = document.getElementById("cards");
+function showProfileData(id) {
+    // id = JSON.parse(localStorage.getItem("id"));
+    cards.innerHTML = "";
+    workers = JSON.parse(localStorage.getItem("worker")) || [];
+    console.log(workers)
+    workers.forEach((worker, index) => {
+        cards.insertAdjacentHTML("beforeend", `
+                     <div class="profil-personnel">
+                     <img src="${worker.url}" alt="photo profile" onclick="ShowDetails(${worker.id})">
+                    <h4>${worker.name}</h4>
+                    <p>Edit</p>
+                    <span>${worker.experience[index].company}</span>
+                    
+                </div>
+        `)
+    })
+}
+showProfileData(id)
+
+
