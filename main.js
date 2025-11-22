@@ -275,3 +275,42 @@ function HandeleAsignedWorkers(e) {
     SelectProfile.classList.remove("is_hidden");
 }
 
+// display all profile 3la 7ssab les conditions 
+function DisplayProfile(i) {
+    SelectProfile.insertAdjacentHTML("beforeend", `
+                <div class="profil-personnel" id="worker-${i}">
+                    <img src="${workers[i].url}" alt="photo profile">
+                    <h4>${workers[i].name}</h4>
+                    <p class="selectBtn" onclick="selectedProfile(this, ${i})">Select</p>
+                    <span class="experience-company-name">${workers[i].role}</span>
+                </div>
+            `);
+    found = true;
+}
+//selected worker profile
+function selectedProfile(ele, workerIndex) {
+    ele.parentElement.outerHTML = "";
+
+    workers = JSON.parse(localStorage.getItem("worker")) || [];
+    const slectedZone = currentZone.dataset.action;
+
+    workers = JSON.parse(localStorage.getItem("worker"));
+
+    currentZone.insertAdjacentHTML("beforeend", `
+            <div class="employee-conference-room">
+                <img src="${workers[workerIndex].url}" alt="photo profile">
+                <h4>${workers[workerIndex].name}</h4>
+                <p>${workers[workerIndex].role}</p>
+                <button class="removeworker" onclick="ReturnTAsignedWorker(${workerIndex})">x</button>
+            </div>
+        `);
+
+    selectedWorker = workers.splice(workerIndex, 1);
+
+    localStorage.setItem("worker", JSON.stringify(workers));
+
+    showProfileData(workerIndex);
+
+    ChangeColorBtn();
+}
+
