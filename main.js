@@ -25,10 +25,11 @@ btns.forEach((btn) => {
 })
 
 // ajoutte employee
-let id = JSON.parse(localStorage.getItem("id")) || 0;
+let id = JSON.parse(localStorage.getItem("id")) || 1;
 const form = document.getElementById("workerInputs");
 const inputs = document.querySelectorAll(".input");
 const SubmitBtn = document.getElementById("submit");
+const errorName = document.querySelector(".error-Name");
 const emailPhoneForm = document.getElementById("email-phone-form");
 let Asexp;
 SubmitBtn.addEventListener("click", (e) => {
@@ -42,7 +43,6 @@ SubmitBtn.addEventListener("click", (e) => {
     const email = inputs[3].value.trim();
     const phone = inputs[4].value.trim();
 
-    const errorName = document.querySelector(".error-Name");
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const urlRegex = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
@@ -75,7 +75,8 @@ SubmitBtn.addEventListener("click", (e) => {
 
     if (valid) {
 
-        addexperience(id);
+        const expValid = addexperience();
+        if (!expValid) return;
 
         workers.push({
             id: id++,
@@ -101,10 +102,8 @@ SubmitBtn.addEventListener("click", (e) => {
     }
 });
 
-// add experience 
 
 const addExpBtn = document.getElementById("addExpBtn");
-
 // Add experience 
 addExpBtn.addEventListener("click", () => {
     expForm.classList.remove("is_hidden");
@@ -122,39 +121,33 @@ addExpBtn.addEventListener("click", () => {
             <input type="date" name="ToInput">
         </div>
     `);
-    // Asexp++;
 });
 // localStorage.clear();
-function addexperience(id) {
- 
-        let validExp = true;
-        const ExpError = document.querySelector(".errorexp");
-        // all company input in add experience formula
-        const company = document.querySelectorAll('input[name="Companyinput"]')
-        const expRole = document.querySelectorAll('input[name="expRoleinput"]');
-        const From = document.querySelectorAll('input[name="Frominput"]');
-        const To = document.querySelectorAll('input[name="ToInput"]');
-        console.log(company)
-        console.log(expRole)
-   for (let i = 0; i < company.length; i++) {
-        if (!(company[i].value.trim() || expRole[i].value.trim() || From[i].value.trim() || To[i].value.trim())) {
-            ExpError.classList.remove("is_hidden");
-            ExpError.textContent = "enter valid information!";
+function addexperience() {
+
+    let validExp = true;
+    const ExpError = document.querySelectorAll(".errorexp");
+    const company = document.querySelectorAll('input[name="Companyinput"]');
+    const expRole = document.querySelectorAll('input[name="expRoleinput"]');
+    const From = document.querySelectorAll('input[name="Frominput"]');
+    const To = document.querySelectorAll('input[name="ToInput"]');
+    for (let i = 0; i < company.length; i++) {
+        if (!(company[i].value.trim() && expRole[i].value.trim() && From[i].value.trim() && To[i].value.trim())) {
+            ExpError[i].classList.remove("is_hidden");
+            ExpError[i].textContent = "enter valid information!";
             validExp = false;
-        }
-        else {
-            ExpError.classList.add("is_hidden");
+        } else {
+            console.log("hi")
+            ExpError[i].classList.add("is_hidden");
             experience.push({
                 company: company[i].value,
                 rl: expRole[i].value,
                 from: From[i].value,
                 to: To[i].value
             });
-            console.log(experience)
-            Asexp = 0;
         }
     }
-
+    return validExp;
 }
 
 //show employee Profil
@@ -170,12 +163,43 @@ function showProfileData(id) {
                      <img src="${worker.url}" alt="photo profile" onclick="ShowDetails(${worker.id})">
                     <h4>${worker.name}</h4>
                     <p>Edit</p>
-                    <span>${worker.experience[index].company}</span>
+                    <span class="experience-company-name">${worker.role}</span>
                     
                 </div>
-        `)
+        `);
     })
 }
 showProfileData(id)
 
+
+// show Details Modal
+function ShowDetails(id) {
+    DetailsModal.classList.remove("is_hidden")
+    workers = JSON.parse(localStorage.getItem("worker")) || [];
+    const workerInfoDetail = document.querySelector(".worker-info-detail");
+    const workerImageDetail = document.querySelector(".worker-image-detail");
+    const workerExperienceDetail = document.getElementById("workerExperienceDetail");
+    const worker = workers.find(w => w.id == id);
+    console.log(worker)
+    workerInfoDetail.innerHTML = `
+                        <h3 id="workerNameDetail">Name: ${worker.name}</h3>
+                    <p id="workerRoleDetail">Role: ${worker.role}</p>
+                    <p id="workerEmailDetail">Email: ${worker.email}</p>
+                    <p id="workerPhoneDetail">Phone: ${worker.phone}</p>
+    `
+    workerImageDetail.innerHTML = `
+                        <img src="${worker.url}" alt="worker image" id="workerImageDetail">
+                        `
+    workerExperienceDetail.innerHTML = "<h4>Experience:</h4>";
+    worker.experience.forEach(exp => {
+        workerExperienceDetail.innerHTML += `
+        <div>
+        <p>Company : ${exp.company}</p>
+        <p>role : ${exp.rl}</p>
+        <p>From : ${exp.from}</p>
+        <p>To : ${exp.to}</p>
+        </div>
+        `
+    })
+}
 
