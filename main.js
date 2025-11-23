@@ -21,6 +21,7 @@ btns.forEach((btn) => {
             default:
                 modalAjouteContent.classList.add("is_hidden")
                 expForm.innerHTML = ""
+
                 break;
         }
     })
@@ -87,17 +88,24 @@ SubmitBtn.addEventListener("click", (e) => {
             phone: phone,
             experience: [...experience]
         });
-
+        errorName.classList.add("is_hidden");
+        inputs[0].style.border = ".1px solid rgb(184, 180, 180);";
+        inputs[1].style.border = ".1px solid rgb(184, 180, 180);";
+        inputs[2].style.border = ".1px solid rgb(184, 180, 180);";
+        inputs[3].style.border = ".1px solid rgb(184, 180, 180);";
+        inputs[4].style.border = ".1px solid rgb(184, 180, 180);";
         experience = [];
 
         localStorage.setItem("id", (id))
         localStorage.setItem("worker", JSON.stringify(workers));
 
         localStorage.setItem("worker_backup", JSON.stringify(workers));
-
+emailPhoneForm
         showProfileData();
         expForm.classList.add("is_hidden");
         expForm.innerHTML = "";
+        form.reset();
+        emailPhoneForm.reset();
     }
 });
 
@@ -131,7 +139,7 @@ function addexperience() {
     const From = document.querySelectorAll('input[name="Frominput"]');
     const To = document.querySelectorAll('input[name="ToInput"]');
     for (let i = 0; i < company.length; i++) {
-        if (!(company[i].value.trim() && expRole[i].value.trim() && From[i].value.trim() && To[i].value.trim())) {
+        if (!(company[i].value.trim() && expRole[i].value.trim() && From[i].value.trim() && To[i].value.trim()&& From[i].value < To[i].value)) {
             ExpError[i].classList.remove("is_hidden");
             ExpError[i].textContent = "enter valid information!";
             validExp = false;
@@ -152,7 +160,6 @@ function addexperience() {
 //show employee Profil
 const cards = document.getElementById("cards");
 function showProfileData() {
-    // id = JSON.parse(localStorage.getItem("id"));
     cards.innerHTML = "";
     workers = JSON.parse(localStorage.getItem("worker")) || [];
     console.log(workers)

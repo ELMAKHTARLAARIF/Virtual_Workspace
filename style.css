@@ -20,7 +20,9 @@ body {
     box-sizing: border-box;
     position: relative;
 }
-
+.section-hero h1{
+    display: none;
+}
 .section-hero.backdrop {
     filter: blur(8px);
     pointer-events: none;
@@ -576,7 +578,7 @@ svg polygon {
 }
 
 .select-profile {
-    width: 13%;
+    width: 20%;
     height: 40%;
     border-radius: 10px;
     box-shadow: 0 0 10px 5px rgb(139, 139, 139);
@@ -765,4 +767,10 @@ svg polygon {
         font-size: 0.9rem;
     }
 
+}
+@media (max-width:1024px) {
+      .select-profile{
+        width: 45%;
+        left: 200px;
+     }
 }
