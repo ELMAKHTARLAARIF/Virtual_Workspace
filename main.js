@@ -211,7 +211,6 @@ function ShowDetails(id) {
 }
 const choseEmployeeBtn = document.querySelectorAll(".chose-employee-btn");
 const SelectProfile = document.getElementById("Select-profile");
-// let currentZone = null;
 let selectedWorker = [];
 
 choseEmployeeBtn.forEach((btn) => {
@@ -374,9 +373,3 @@ function ReturnTAsignedWorker(element, workerID) {
     showProfileData();
     ChangeColorBtn();
 }
-
-// const menubtn = document.querySelector(".MenuBtn");
-// menubtn.addEventListener("click", () => {
-//     document.querySelector(".personnel-info").style.display = "block";
-//     menubtn.parentElement.style.display = "none"
-// });
