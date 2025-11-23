@@ -5,19 +5,28 @@
 
 :root {
     --bac-image: url(./photo/kitchen.jpg);
-    --main: rgb(199, 214, 224);
-    --var: rgb(253, 247, 247);
+    --main: rgb(213, 230, 236);
+    --var: rgb(255, 255, 255);
+}
+body{
+    height: 100vh;
+    position:relative;
 }
 
-.section-hero {
+.section-hero{
     width: 100%;
     height: 100vh;
     box-sizing: border-box;
-    background-color: var(--main);
+    position: relative;
+}
+.section-hero.backdrop {
+  filter: blur(8px);
+  pointer-events: none; 
+  background-color: #777676;
 }
 
-.hero-content {
 
+.hero-content {
     width: 100%;
     height: 100%;
     display: flex;
@@ -36,6 +45,9 @@
     align-items: center;
     position: relative;
     gap: 5px;
+    border-left: 3px solid black ;
+    border-bottom:4px solid black ;
+    box-shadow: 0 0 5px black;
 }
 
 .personnel-info h2 {
@@ -73,52 +85,57 @@
 }
 
 .profil-personnel {
-  width: 80%;
-  height: 60px;
-  background-color: rgb(245, 245, 245);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  padding: 0 10px;
-  margin: 5px 0 5px ;
-  border-radius: 10px;
-  box-shadow: 0 0 6px black;
-  flex-wrap: wrap;
+    width: 80%;
+    height: 60px;
+    background-color: rgb(245, 245, 245);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 10px;
+    margin: 5px 0 5px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px black;
+    /* flex-wrap: wrap; */
+    transition: all .5s ease;
+}
+
+.profil-personnel:hover {
+    transform: translateX(5px);
 }
 
 .profil-personnel img {
-  width: 55px;
-  height: 55px;
-  border: 2px dotted blue;
-  border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    border: 2px dotted blue;
+    border-radius: 50%;
 }
 
 .profil-personnel h4 {
-  text-align: center;
-  margin: 0 0 5px;
-  font-size: 1rem;
+    text-align: center;
+    margin: 0 0 5px;
+    font-size: 1rem;
 }
 
 .profil-personnel p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: rgba(255, 197, 7, 0.788);
-  cursor: pointer;
-  transition: 0.3s;
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 197, 7, 0.788);
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .profil-personnel p:hover {
-  color: red;
+    color: red;
 }
 
 .profil-personnel span {
-  position: absolute;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.75rem;
-  color: gray;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: gray;
 }
 
 .personnel-info button {
@@ -129,7 +146,7 @@
     border-radius: 10px;
     background-color: rgb(15, 110, 199);
     color: white;
-} 
+}
 
 /* .canvas{
     display: grid;
@@ -152,68 +169,114 @@ svg polygon {
 
 .work-space {
     background-image: url(./photo/kitchen.jpg);
-    background-position: center;
+    /* background-position: center; */
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
     border-radius: 10px;
     width: 90%;
-    height: 650px;
+    height: 800px;
     margin-right: 10px;
-
-
 }
 
 .container {
+    display: grid;
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-areas:
-        'div1 div1 div7 div2 div3'
-        'div4 div4 div7 div8 div8'
-        'div4 div4 div7 div5 div6'
-    ;
-    gap: 4px;
+      display: grid;
+  grid-template-rows: repeat(20, 1fr);
+  grid-template-columns: repeat(20, 1fr);
+    /* grid-template-areas:
+        "div1 div1 div7 div2 div3"
+        "div4 div4 div7 div8 div8"
+        "div4 div4 div7 div5 div6";
+        gap: 10px; */
 }
 
-/* .div1 {
-    background-color: rgba(255, 197, 7, 0.788);
-    grid-area: div1;
+.div1 {
+  grid-column: 1 / 9;
+  grid-row: 1 / 8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .div2 {
-    background-color: rgba(255, 197, 7, 0.788);
-    grid-area: div2;
+  grid-column: 1/9;
+  grid-row: 8/21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .div3 {
-    background-color: rgba(255, 197, 7, 0.788);
-    grid-area: div3;
+  grid-column: 12 / 17;
+  grid-row: 1 / 8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .div4 {
-    background-color: rgba(255, 197, 7, 0.788);
-    grid-area: div4;
+  grid-column: 17/21;
+  grid-row: 1 / 8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
 .div5 {
-    background-color: rgba(255, 197, 7, 0.788);
-    grid-area: div5;
+  grid-column: 12 / 16;
+  grid-row: 14/21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .div6 {
-    background-color: rgba(255, 197, 7, 0.788);
-    grid-area: div6;
+  grid-column: 17/21;
+  grid-row: 14/21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .div7 {
-    background-color: rgba(255, 197, 7, 0.788);
-    width: 75%;
     grid-area: div7;
 }
 
 .div8 {
     grid-area: div8;
+}
+
+.div1,
+.div2,
+.div3,
+.div4,
+.div5,
+.div6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+}
+
+/* .container>div {
+    min-height: 100px;
+}
+
+.div1 {
+    min-height: unset;
 } */
+
+.container .chose-employee-btn {
+    width: 40px;
+    height: 30px;
+    margin-bottom: 15px;
+    color: #fffcfc;
+    border: none;
+    border-radius: 5px;
+}
 
 .add-worker-modal {
     position: absolute;
@@ -399,66 +462,192 @@ svg polygon {
 }
 
 /* details section */
- .Details-modal {
+.Details-modal {
     position: absolute;
-    top: 40px;
-    left: 340px;
-    width: 45%;
+    top: 43px;
+    left: 22%;
+    width: 30%;
+    /* max-width: 600px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     border-radius: 10px;
     gap: 20px;
-
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .close-details-modal {
-    padding: 20px 0 20px ;
     width: 100%;
-    text-align: center;
-   
+    display: flex;
+    justify-content: space-around;
     border-bottom: 2px solid black;
+    padding-bottom: 10px;
 }
 
 .close-details-modal span {
-    font-size: 30px;
-    font-weight: 900;
+    font-size: 24px;
+    font-weight: 700;
     color: #555;
-}.close-details-modal button{
+}
+
+.close-details-modal button {
     width: 30px;
     height: 30px;
     border: none;
-    border-radius: 20px;
-    margin-left: 380px;
+    border-radius: 50%;
     background-color: rgb(182, 178, 178);
+    cursor: pointer;
 }
-.details-content{
-    width: 80%;
-    height: fit-content;
+
+.details-content {
+    width: 100%;
     display: flex;
-    gap: 80px;
+    flex-wrap: wrap;
+    gap: 40px;
     justify-content: center;
     align-items: center;
-}.worker-image-detail{
-    width: 50%;
-    height: 30%;
+}
+
+.worker-image-detail {
+    flex: 1 1 40%;
     display: flex;
-    justify-content: end;
-    align-items: end;
-}.worker-image-detail img{
-    width: 60%;
-    border-radius: 60%;
+    justify-content: center;
+    align-items: center;
+}
+
+.worker-image-detail img {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    border-radius: 50%;
     border: 2px dotted blue;
-}.worker-info-detail{
-    width: max-content;
+}
+
+.worker-info-detail {
+    flex: 1 1 50%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-}.worker-info-detail p{
-    width: max-content;
+    gap: 10px;
+}
+
+.worker-info-detail p {
+    font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    .Details-modal {
+        left: 2%;
+        width: 96%;
+        padding: 15px;
+    }
+
+    .details-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .worker-info-detail p {
+        font-size: 12px;
+        text-align: center;
+    }
+}
+
+/* zone employee */
+.employee-conference-room {
+    width: fit-content;
+    height: 40px;
+    background-color: rgb(245, 245, 245);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 10px;
+    margin: 0 auto;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    gap: 5px;
+    box-shadow: 0 0 6px black;
+    /* flex-wrap: wrap; */
+    transition: all .5s ease;
+}
+
+.employee-conference-room img {
+    width: 30%;
+    height: 80%;
+    border-radius: 50%;
+}
+.employee-conference-room h4{
+    font-size: 12px;
+    
+}.employee-conference-room p{
+    font-size: 10px;
+}
+.select-profile{
+    width: 20%;
+    height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 20px rgb(139, 139, 139);
+    background-color: rgb(243, 238, 238);
+    position: absolute;
+    top: 50px;
+    left: 30px;
+    text-align: center;
+    padding-left:20px ;
+    overflow-y: auto;
+}.side-bare-title{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}.side-bare-title button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #c7c5c5;
+    color: #777676;
+    border: none;
+}
+.select-profile h3{
+margin: 10px 0 10px;
+}.worker-experience-detail{
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.worker-experience-detail div{
+width: 30%;
+    background-color: #cccaca34;
+    text-align: center;
+    border-radius: 10px;
+    margin:0 10px 10px;
+
+}
+.zones .removeworker{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgb(230, 48, 48);
+}.zones{
+    margin-right:40px ;
 }
 .is_hidden {
     display: none;
+}
+@media (max-width:1024px)  {
+.Details-modal{
+    width: 30%;
+}
+}
+@media (max-width:767px)  {
+.Details-modal{
+    width: 20%;
+}
 }

@@ -15,7 +15,9 @@ btns.forEach((btn) => {
                 modalAjouteContent.classList.remove("is_hidden")
                 break;
             case "closeDetailsModal":
-                DetailsModal.classList.add("is_hidden")
+                DetailsModal.classList.add("is_hidden");
+                document.querySelector(".section-hero").classList.remove("backdrop");
+                break;
             default:
                 modalAjouteContent.classList.add("is_hidden")
                 expForm.innerHTML = ""
@@ -152,7 +154,7 @@ function addexperience() {
 
 //show employee Profil
 const cards = document.getElementById("cards");
-function showProfileData(id) {
+function showProfileData() {
     // id = JSON.parse(localStorage.getItem("id"));
     cards.innerHTML = "";
     workers = JSON.parse(localStorage.getItem("worker")) || [];
@@ -169,12 +171,13 @@ function showProfileData(id) {
         `);
     })
 }
-showProfileData(id)
+showProfileData()
 
 
 // show Details Modal
 function ShowDetails(id) {
     DetailsModal.classList.remove("is_hidden")
+    document.querySelector(".section-hero").classList.add("backdrop");
     workers = JSON.parse(localStorage.getItem("worker")) || [];
     const workerInfoDetail = document.querySelector(".worker-info-detail");
     const workerImageDetail = document.querySelector(".worker-image-detail");
@@ -204,15 +207,17 @@ function ShowDetails(id) {
 }
 const choseEmployeeBtn = document.querySelectorAll(".chose-employee-btn");
 const SelectProfile = document.getElementById("Select-profile");
-let currentZone = null;
+// let currentZone = null;
 let selectedWorker = [];
 
 choseEmployeeBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
         HandeleAsignedWorkers(e);
+
     });
 });
 let found;
+let currentZone;
 function HandeleAsignedWorkers(e) {
     found = false;
     if (!e) return;
@@ -224,7 +229,7 @@ function HandeleAsignedWorkers(e) {
 
     SelectProfile.innerHTML = `
         <div class="side-bare-title">
-            <h3>Those authorized to join</h3>
+            <h3 id = "full">Those authorized to join</h3>
             <button class="close-chose-worker">X</button>
         </div>
     `;
@@ -232,10 +237,10 @@ function HandeleAsignedWorkers(e) {
     for (let i = 0; i < workers.length; i++) {
         switch (ZoneAction) {
             case "conference":
-                DisplayProfile(i); e
+                DisplayProfile(i);
                 break;
             case "Réceptionnistes":
-                if (workers[i].role !== "Autres rôles")
+                if (workers[i].role !== "Autres rôles" && workers[i].role !== "sécurité" && workers[i].role !== "Techniciens IT" )
                     DisplayProfile(i)
                 break;
             case "Techniciens IT":
@@ -281,36 +286,82 @@ function DisplayProfile(i) {
                 <div class="profil-personnel" id="worker-${i}">
                     <img src="${workers[i].url}" alt="photo profile">
                     <h4>${workers[i].name}</h4>
-                    <p class="selectBtn" onclick="selectedProfile(this, ${i})">Select</p>
+                    <p class="selectBtn" onclick="selectedProfile(this, ${workers[i].id})">Select</p>
                     <span class="experience-company-name">${workers[i].role}</span>
                 </div>
             `);
     found = true;
 }
 //selected worker profile
-function selectedProfile(ele, workerIndex) {
-    ele.parentElement.outerHTML = "";
 
+function selectedProfile(ele, workerIndex) {
+
+    let indexx = workers.indexOf(workers.find(worker => worker.id == workerIndex))
     workers = JSON.parse(localStorage.getItem("worker")) || [];
     const slectedZone = currentZone.dataset.action;
 
     workers = JSON.parse(localStorage.getItem("worker"));
+    if (currentZone.children.length <= 3 && slectedZone !== "Réceptionnistes") {
 
+        GotZone(ele, indexx);
+    }
+    else if (currentZone.children.length <= 6 && slectedZone === "Réceptionnistes") {
+        GotZone(ele, indexx);
+    }
+    else {
+        const full = document.querySelector("#full");
+        full.textContent = "Room is Full";
+        full.style.backgroundColor = "red"
+    }
+
+    showProfileData();
+    ChangeColorBtn();
+}
+
+function GotZone(ele, workerIndex) {
     currentZone.insertAdjacentHTML("beforeend", `
             <div class="employee-conference-room">
                 <img src="${workers[workerIndex].url}" alt="photo profile">
                 <h4>${workers[workerIndex].name}</h4>
                 <p>${workers[workerIndex].role}</p>
-                <button class="removeworker" onclick="ReturnTAsignedWorker(${workerIndex})">x</button>
+                <button class="removeworker" onclick="ReturnTAsignedWorker(this,${workerIndex})">x</button>
             </div>
         `);
-
-    selectedWorker = workers.splice(workerIndex, 1);
-
+    ele.parentElement.outerHTML = "";
+    selectedWorker = workers.splice(workerIndex, 1)[0];
     localStorage.setItem("worker", JSON.stringify(workers));
-
-    showProfileData(workerIndex);
-
-    ChangeColorBtn();
 }
 
+function ChangeColorBtn() {
+    const cheldOfzones = document.querySelectorAll(".zones");
+    cheldOfzones.forEach(cheld => {
+        if (cheld.children.length == 0)
+            cheld.nextElementSibling.style.backgroundColor = "red";
+        else
+            cheld.nextElementSibling.style.backgroundColor = "blue";
+    })
+
+}
+ChangeColorBtn();
+
+function ReturnTAsignedWorker(element, elementIndex) {
+    console.log("hello", elementIndex)
+    element.parentElement.outerHTML = "";
+    workers.push(selectedWorker);
+    localStorage.setItem("worker", JSON.stringify(workers));
+    workers.forEach((worker) => {
+        if (worker.id === selectedWorker.id) {
+            SelectProfile.insertAdjacentHTML("beforeend", `
+                <div class="profil-personnel" id="worker-${worker.id}">
+                    <img src="${worker.url}" alt="photo profile">
+                    <h4>${worker.name}</h4>
+                    <p class="selectBtn" onclick="selectedProfile(this, ${worker.id})">Select</p>
+                    <span class="experience-company-name">${worker.role}</span>
+                </div>
+            `);
+        }
+    })
+ChangeColorBtn();
+    showProfileData();
+
+}
