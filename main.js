@@ -45,7 +45,6 @@ SubmitBtn.addEventListener("click", (e) => {
     const email = inputs[3].value.trim();
     const phone = inputs[4].value.trim();
 
-
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const urlRegex = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
     const phoneRegex = /^(05|06|07)\d{8}$|^(\+212)\d{9}$/;
@@ -76,7 +75,6 @@ SubmitBtn.addEventListener("click", (e) => {
     }
 
     if (valid) {
-
         const expValid = addexperience();
         if (!expValid) return;
 
@@ -89,16 +87,15 @@ SubmitBtn.addEventListener("click", (e) => {
             phone: phone,
             experience: [...experience]
         });
-        console.log(workers)
-        errorName.classList.add("is_hidden");
-        errorName.textContent = "";
-        inputs.forEach(inp => inp.style.border = ".1px solid rgb(184, 180, 180)");
+
+        experience = [];
+
         localStorage.setItem("id", (id))
         localStorage.setItem("worker", JSON.stringify(workers));
-        showProfileData(id);
 
-        // form.reset();
-        // emailPhoneForm.reset();
+        localStorage.setItem("worker_backup", JSON.stringify(workers));
+
+        showProfileData();
         expForm.classList.add("is_hidden");
         expForm.innerHTML = "";
     }
@@ -240,7 +237,7 @@ function HandeleAsignedWorkers(e) {
                 DisplayProfile(i);
                 break;
             case "Réceptionnistes":
-                if (workers[i].role !== "Autres rôles" && workers[i].role !== "sécurité" && workers[i].role !== "Techniciens IT" )
+                if (workers[i].role !== "Autres rôles" && workers[i].role !== "sécurité" && workers[i].role !== "Techniciens IT")
                     DisplayProfile(i)
                 break;
             case "Techniciens IT":
@@ -283,10 +280,10 @@ function HandeleAsignedWorkers(e) {
 // display all profile 3la 7ssab les conditions 
 function DisplayProfile(i) {
     SelectProfile.insertAdjacentHTML("beforeend", `
-                <div class="profil-personnel" id="worker-${i}">
+                <div class="profil-personnel" id="worker-${workers[i].id}">
                     <img src="${workers[i].url}" alt="photo profile">
                     <h4>${workers[i].name}</h4>
-                    <p class="selectBtn" onclick="selectedProfile(this, ${workers[i].id})">Select</p>
+                    <p class="selectBtn"  onclick="selectedProfile(this, ${workers[i].id})">Select</p>
                     <span class="experience-company-name">${workers[i].role}</span>
                 </div>
             `);
@@ -294,10 +291,11 @@ function DisplayProfile(i) {
 }
 //selected worker profile
 
-function selectedProfile(ele, workerIndex) {
+function selectedProfile(ele, workerId) {
 
-    let indexx = workers.indexOf(workers.find(worker => worker.id == workerIndex))
     workers = JSON.parse(localStorage.getItem("worker")) || [];
+     let indexx = workers.findIndex(worker => worker.id === workerId);
+
     const slectedZone = currentZone.dataset.action;
 
     workers = JSON.parse(localStorage.getItem("worker"));
@@ -324,10 +322,10 @@ function GotZone(ele, workerIndex) {
                 <img src="${workers[workerIndex].url}" alt="photo profile">
                 <h4>${workers[workerIndex].name}</h4>
                 <p>${workers[workerIndex].role}</p>
-                <button class="removeworker" onclick="ReturnTAsignedWorker(this,${workerIndex})">x</button>
+                <button class="removeworker" onclick="ReturnTAsignedWorker(this,${workers[workerIndex].id})">x</button>
             </div>
         `);
-    ele.parentElement.outerHTML = "";
+    ele.parentElement.remove();
     selectedWorker = workers.splice(workerIndex, 1)[0];
     localStorage.setItem("worker", JSON.stringify(workers));
 }
@@ -344,24 +342,34 @@ function ChangeColorBtn() {
 }
 ChangeColorBtn();
 
-function ReturnTAsignedWorker(element, elementIndex) {
-    console.log("hello", elementIndex)
-    element.parentElement.outerHTML = "";
-    workers.push(selectedWorker);
-    localStorage.setItem("worker", JSON.stringify(workers));
-    workers.forEach((worker) => {
-        if (worker.id === selectedWorker.id) {
-            SelectProfile.insertAdjacentHTML("beforeend", `
-                <div class="profil-personnel" id="worker-${worker.id}">
-                    <img src="${worker.url}" alt="photo profile">
-                    <h4>${worker.name}</h4>
-                    <p class="selectBtn" onclick="selectedProfile(this, ${worker.id})">Select</p>
-                    <span class="experience-company-name">${worker.role}</span>
-                </div>
-            `);
-        }
-    })
-ChangeColorBtn();
-    showProfileData();
 
+function ReturnTAsignedWorker(element, workerID) {
+    element.parentElement.remove();
+
+    let workers = JSON.parse(localStorage.getItem("worker")) || [];
+    const backup = JSON.parse(localStorage.getItem("worker_backup")) || [];
+    const worker = backup.find(w => w.id === workerID);
+    if (!worker) return;
+
+    if (!workers.some(w => w.id === workerID)) {
+        workers.push(worker);
+        localStorage.setItem("worker", JSON.stringify(workers));
+        SelectProfile.insertAdjacentHTML("beforeend", `
+            <div class="profil-personnel" id="worker-${worker.id}">
+                <img src="${worker.url}" alt="photo profile">
+                <h4>${worker.name}</h4>
+                <p class="selectBtn" onclick="selectedProfile(this, ${worker.id})">Select</p>
+                <span class="experience-company-name">${worker.role}</span>
+            </div>
+        `);
+    }
+
+    showProfileData();
+    ChangeColorBtn();
 }
+
+// const menubtn = document.querySelector(".MenuBtn");
+// menubtn.addEventListener("click", () => {
+//     document.querySelector(".personnel-info").style.display = "block";
+//     menubtn.parentElement.style.display = "none"
+// });
