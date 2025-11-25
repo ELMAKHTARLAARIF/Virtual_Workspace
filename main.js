@@ -1,5 +1,4 @@
 let workers = [];
-let experience = [];
 
 const modalAjouteContent = document.getElementById("modal-content");
 const btns = document.querySelectorAll(".btn");
@@ -35,16 +34,18 @@ const SubmitBtn = document.getElementById("submit");
 const errorName = document.querySelector(".error-Name");
 const emailPhoneForm = document.getElementById("email-phone-form");
 let Asexp;
+let experience =[];
 SubmitBtn.addEventListener("click", (e) => {
     e.preventDefault();
     Asexp = 0;
     let valid = true;
-
+    experience = [];
     const name = inputs[0].value.trim();
     const role = inputs[1].value.trim();
     const url = inputs[2].value.trim();
     const email = inputs[3].value.trim();
     const phone = inputs[4].value.trim();
+
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const urlRegex = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
@@ -77,7 +78,8 @@ SubmitBtn.addEventListener("click", (e) => {
 
     if (valid) {
         const expValid = addexperience();
-        if (!expValid) return;
+        if (!expValid)
+            return;
 
         workers.push({
             id: id++,
@@ -89,24 +91,21 @@ SubmitBtn.addEventListener("click", (e) => {
             experience: [...experience]
         });
         errorName.classList.add("is_hidden");
-        inputs[0].style.border = ".1px solid rgb(184, 180, 180);";
-        inputs[1].style.border = ".1px solid rgb(184, 180, 180);";
-        inputs[2].style.border = ".1px solid rgb(184, 180, 180);";
-        inputs[3].style.border = ".1px solid rgb(184, 180, 180);";
-        inputs[4].style.border = ".1px solid rgb(184, 180, 180);";
-        experience = [];
+inputs.forEach(input => {
+    input.style.border = "1px solid rgb(184, 180, 180)";
+});
 
         localStorage.setItem("id", (id))
         localStorage.setItem("worker", JSON.stringify(workers));
-
         localStorage.setItem("worker_backup", JSON.stringify(workers));
-emailPhoneForm
+
         showProfileData();
         expForm.classList.add("is_hidden");
         expForm.innerHTML = "";
-        form.reset();
-        emailPhoneForm.reset();
+        // form.reset();
+        // emailPhoneForm.reset();
     }
+
 });
 
 
@@ -139,7 +138,7 @@ function addexperience() {
     const From = document.querySelectorAll('input[name="Frominput"]');
     const To = document.querySelectorAll('input[name="ToInput"]');
     for (let i = 0; i < company.length; i++) {
-        if (!(company[i].value.trim() && expRole[i].value.trim() && From[i].value.trim() && To[i].value.trim()&& From[i].value < To[i].value)) {
+        if (!(company[i].value.trim() && expRole[i].value.trim() && From[i].value.trim() && To[i].value.trim() && From[i].value < To[i].value)) {
             ExpError[i].classList.remove("is_hidden");
             ExpError[i].textContent = "enter valid information!";
             validExp = false;
@@ -300,7 +299,7 @@ function DisplayProfile(i) {
 function selectedProfile(ele, workerId) {
 
     workers = JSON.parse(localStorage.getItem("worker")) || [];
-     let indexx = workers.findIndex(worker => worker.id === workerId);
+    let indexx = workers.findIndex(worker => worker.id === workerId);
 
     const slectedZone = currentZone.dataset.action;
 
@@ -352,7 +351,7 @@ ChangeColorBtn();
 function ReturnTAsignedWorker(element, workerID) {
     element.parentElement.remove();
 
-    let workers = JSON.parse(localStorage.getItem("worker")) || [];
+     workers = JSON.parse(localStorage.getItem("worker")) || [];
     const backup = JSON.parse(localStorage.getItem("worker_backup")) || [];
     const worker = backup.find(w => w.id === workerID);
     if (!worker) return;
@@ -369,7 +368,22 @@ function ReturnTAsignedWorker(element, workerID) {
             </div>
         `);
     }
-
     showProfileData();
     ChangeColorBtn();
+
+}
+
+function test(){
+    let max = 0;
+    let exper;
+    workers.forEach(w=>{
+        let Totalex = 0;
+        w.experience.forEach(e=>{
+            Totalex+= new Date(e.to)-new Date(e.from);
+        })
+        if(Totalex>max)
+            exper ={...w};
+            max=Totalex;
+    })
+    console.log("the most experienced worker: ", exper);
 }
